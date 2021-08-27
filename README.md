@@ -1,4 +1,11 @@
 # Canvas
+a canvas made in pygame
+
+## Features:
+* Draw with any color represented in color palette
+* Erase your mistakes
+* Change brush size (- +)
+* Draw accurately with WASD
 
 ## Albert Einstein 
 ![albert](/data/albert_einstein.png)

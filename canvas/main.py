@@ -1,25 +1,14 @@
-import pygame, sys
-import os
+import pygame
 pygame.init()
 
+from dot import Dot
 from colors import *
 from terminate import terminate
 from settings import COLORED_DOT_SIZE, ERASER_SIZE, PRIMARY_DOT_SIZE, WIDTH, HEIGHT, FPS
 from action_handlers import dot_size_handler, in_color_palette_handler, movement_handler
 from pygame.constants import MOUSEBUTTONDOWN
 from custom_events import RESTART_EVENT, restart
-from draw import draw_screen
-
-
-class Dot(pygame.Rect):
-    def __init__(self, pos, size, color):
-        super().__init__(self)
-        self.x, self.y = pos
-        self.size = size
-        self.color = color
-
-    def change_color(self, color):
-        self.color = color
+from draw import draw_color_palette, draw_screen
 
 
 def init():
@@ -42,7 +31,6 @@ def main():
         Dot((40, 40), COLORED_DOT_SIZE, GREEN),
     ]
 
-
     pygame.Surface.fill(screen, BLACK)
     clock = pygame.time.Clock()
 
@@ -54,7 +42,8 @@ def main():
                 terminate()
 
             if event.type == RESTART_EVENT:
-                running = False
+                pygame.Surface.fill(screen, BLACK)
+                dot.x, dot.y = 0, HEIGHT
                 break
 
             if pygame.mouse.get_pressed()[0]:
@@ -73,7 +62,9 @@ def main():
         movement_handler(key_pressed, dot)
         dot_size_handler(key_pressed, dot)
         restart(key_pressed)
-        draw_screen(screen, color_palette_dots, dot, eraser)
+        draw_screen(screen, dot, eraser)
+        draw_color_palette(screen, color_palette_dots)
+        pygame.display.update()
 
     main()
 
